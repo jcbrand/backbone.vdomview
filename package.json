@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "description": "VirtualDOM-aware Backbone View",
   "main": "backbone.vdomview.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jcbrand/backbone.vdomview.git"
   },
   "keywords": [
     "backbone",
