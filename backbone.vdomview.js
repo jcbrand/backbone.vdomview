@@ -1,14 +1,13 @@
 /*!
  * Backbone.VDOMView
  *
- * Copyright (c) 2017, JC Brand <jc@opkode.com>
+ * MIT Licensed. Copyright (c) 2017, JC Brand <jc@opkode.com>
  */
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define([
             "virtual-dom",
             "vdom-parser",
-            "underscore",
             "backbone"
         ], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -16,11 +15,10 @@
         module.exports = factory(
             require('virtual-dom'),
             require('vdom-parser'),
-            require('underscore'),
-            require('backbone'),
+            require('backbone')
         );
    }
-}(this, function (vdom, vdom_parser, _, Backbone) {
+}(this, function (vdom, vdom_parser, Backbone) {
     "use strict";
 
     Backbone.VDOMView = Backbone.View.extend({
