@@ -8,6 +8,7 @@
         define([
             "virtual-dom",
             "vdom-parser",
+            "underscore",
             "backbone"
         ], factory);
     } else if (typeof module === 'object' && module.exports) {
@@ -15,21 +16,28 @@
         module.exports = factory(
             require('virtual-dom'),
             require('vdom-parser'),
-            require('backbone')
+            require('underscore'),
+            require('backbone'),
         );
    }
-}(this, function (vdom, vdom_parser, Backbone) {
+}(this, function (vdom, vdom_parser, _, Backbone) {
     "use strict";
 
     Backbone.VDOMView = Backbone.View.extend({
 
         render () {
+            if (_.isFunction(this.beforeRender)) {
+                this.beforeRender();
+            }
             const patches = vdom.diff(
                 vdom_parser(this.el),
                 vdom_parser(this.renderHTML())
             );
             const root = vdom.patch(this.el, patches);
             this.setElement(root);
+            if (_.isFunction(this.afterRender)) {
+                this.afterRender();
+            }
             return this;
         }
     });
