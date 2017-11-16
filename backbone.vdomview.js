@@ -17,7 +17,7 @@
             require('virtual-dom'),
             require('vdom-parser'),
             require('underscore'),
-            require('backbone'),
+            require('backbone')
         );
    }
 }(this, function (vdom, vdom_parser, _, Backbone) {

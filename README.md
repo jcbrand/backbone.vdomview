@@ -10,7 +10,9 @@ as well as David Frank's [vdom-parser](https://github.com/bitinn/vdom-parser).
 
 To use it, extend `Backbone.VDOMView`. Then, instead of implementing a `render`
 method in your view, add a `renderHTML` view which returns the HTML to be
-rendered (*including* the root element of the view).
+rendered (*including* the root element of the view). React has a similar
+requirement that JSX returned by a component's `render` method should have a
+root node which contains everything else.
 
 The rest will then be handled by `VDOMView`, which will automatically
 generate a diff between the view's current DOM element and the HTML returned by
