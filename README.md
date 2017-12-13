@@ -3,20 +3,27 @@
 This library provides a VirtualDOM-aware Backbone View, called
 `Backbone.VDOMView`.
 
-It depends on Matt Esch's [virtual-dom](https://github.com/Matt-Esch/virtual-dom) implementation
-as well as David Frank's [vdom-parser](https://github.com/bitinn/vdom-parser).
+It depends on [snabbdom](https://github.com/snabbdom/snabbdom) for the
+virtual-DOM implementation.
 
 ## How to use
 
 To use it, extend `Backbone.VDOMView`. Then, instead of implementing a `render`
-method in your view, add a `renderHTML` view which returns the HTML to be
-rendered (*including* the root element of the view). React has a similar
-requirement that JSX returned by a component's `render` method should have a
-root node which contains everything else.
+method in your view, add either a `renderVNode` or `renderHTML` method.
+
+* `renderVNode` must return a virtual node as returned by snabbdom's `h` function.
+* `renderHTML` must return a string of HTML representing the view.
+
+The HTML of the `renderHTML` must be structured that there's a root element
+containing everything else. This root element is the view's top-level element,
+in other words, it's the `this.el` or `this.$el` attribute of the View.
+
+React has a similar requirement that JSX returned by a component's `render` method
+should have a root node which contains everything else.
 
 The rest will then be handled by `VDOMView`, which will automatically
-generate a diff between the view's current DOM element and the HTML returned by
-`renderHTML`. It will then patch the actual DOM element with this diff.
+generate a diff between the view's current DOM element and new virtual-DOM
+node and then patch the actual DOM with this diff.
 
 For example:
 
@@ -27,6 +34,26 @@ For example:
 
         renderHTML () {
             return this.template(_.assign(this.model.toJSON()));
+        }
+    });
+
+Or alternatively:
+
+    const MyView = Backbone.VDOMView.extend({
+
+        tagName: 'span',
+        className: 'vdom-span',
+
+        renderVNode() {
+            return h(
+                'span#container.two.classes',
+                 {on: {click: anotherEventHandler}},
+                [ h('span', {style: {fontWeight: 'normal', fontStyle: 'italic'}},
+                    'This is now italic type'),
+                    ' and this is still just normal text',
+                  h('a', {props: {href: '/bar'}}, 'I\'ll take you places!')
+                ]
+            );
         }
     });
 
