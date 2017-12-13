@@ -9,12 +9,12 @@ virtual-DOM implementation.
 ## How to use
 
 To use it, extend `Backbone.VDOMView`. Then, instead of implementing a `render`
-method in your view, add either a `renderVNode` or `renderHTML` method.
+method in your view, add either a `toVNode` or `toHTML` method.
 
-* `renderVNode` must return a virtual node as returned by snabbdom's `h` function.
-* `renderHTML` must return a string of HTML representing the view.
+* `toVNode` must return a virtual node as returned by snabbdom's `h` function.
+* `toHTML` must return a string of HTML representing the view.
 
-The HTML of the `renderHTML` must be structured that there's a root element
+The HTML of the `toHTML` must be structured that there's a root element
 containing everything else. This root element is the view's top-level element,
 in other words, it's the `this.el` or `this.$el` attribute of the View.
 
@@ -32,7 +32,7 @@ For example:
         tagName: 'span',
         className: 'vdom-span',
 
-        renderHTML () {
+        toHTML () {
             return this.template(_.assign(this.model.toJSON()));
         }
     });
@@ -44,7 +44,7 @@ Or alternatively:
         tagName: 'span',
         className: 'vdom-span',
 
-        renderVNode() {
+        toVNode() {
             return h(
                 'span#container.two.classes',
                  {on: {click: anotherEventHandler}},
@@ -57,13 +57,13 @@ Or alternatively:
         }
     });
 
-### The renderHTML method
+### The toHTML method
 
 One important difference between `Backbone.VDOMView` and Backbone.View that
-should be noted is that `renderHTML` should include the root element of the
+should be noted is that `toHTML` should include the root element of the
 view.
 
-So in the example above `renderHTML` should return `<span class="vdom-span"> ... </span>`
+So in the example above `toHTML` should return `<span class="vdom-span"> ... </span>`
 as the outer part of the HTML string.
 
 This is different from normal Backbone.View classes, where your template will
@@ -74,7 +74,7 @@ only return the *inner* part of the view element.
 
 `Backbone.VDOMView` will call two lifecycle methods (if they exist).
 These are `beforeRender` and `afterRender` and are respectively called
-before and after `renderHTML` is called.
+before and after `toHTML` is called.
 
 ---
 

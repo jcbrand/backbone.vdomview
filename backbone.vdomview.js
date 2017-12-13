@@ -101,14 +101,14 @@
             }
             
             let new_vnode;
-            if (!_.isNill(this.renderVNode)) {
+            if (!_.isNil(this.renderVNode)) {
                 new_vnode = this.renderVNode();
-            } else if (!_.isNill(this.renderHTML)) {
-                new_vnode = tovnode.toVNode(parseHTMLToDOM(this.renderHTML()));
+            } else if (!_.isNil(this.toHTML)) {
+                new_vnode = tovnode.toVNode(parseHTMLToDOM(this.toHTML()));
             }
             const root = patch(this.vnode || this.el, new_vnode);
             this.setElement(root.elm);
-            this.vode = root;
+            this.vnode = root;
 
             if (_.isFunction(this.afterRender)) {
                 this.afterRender();
