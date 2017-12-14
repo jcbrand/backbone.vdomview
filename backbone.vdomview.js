@@ -10,7 +10,6 @@
             "snabbdom-attributes",
             "snabbdom-class",
             "snabbdom-dataset",
-            "snabbdom-eventlisteners",
             "snabbdom-props",
             "snabbdom-style",
             "tovnode",
@@ -24,7 +23,6 @@
             require('snabbdom-attributes'),
             require('snabbdom-class'),
             require('snabbdom-dataset'),
-            require('snabbdom-eventlisteners'),
             require('snabbdom-props'),
             require('snabbdom-style'),
             require('tovnode'),
@@ -37,7 +35,6 @@
         snabbdom_attributes,
         snabbdom_class,
         snabbdom_dataset,
-        snabbdom_eventlisteners,
         snabbdom_props,
         snabbdom_style,
         tovnode,
@@ -50,7 +47,6 @@
         snabbdom_attributes.default,
         snabbdom_class.default,
         snabbdom_dataset.default,
-        snabbdom_eventlisteners.default,
         snabbdom_props.default,
         snabbdom_style.default
     ]);

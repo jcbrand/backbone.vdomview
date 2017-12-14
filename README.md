@@ -69,6 +69,27 @@ as the outer part of the HTML string.
 This is different from normal Backbone.View classes, where your template will
 only return the *inner* part of the view element.
 
+### Event registration on virtual nodes
+
+[Snabbdom](https://github.com/snabbdom/snabbdom) implements non-core
+functionality in separate modules.
+
+Backbone.VDOMView makes use of all Snabbdom's modules except for the
+`eventlisteners` module.
+
+The `eventlisteners` module allows you to add event listeners
+when creating a virtual node via the `h` method. You could for
+example do this in the `toVNode` method, but not in the `toHTML` method.
+
+This way of registering event listeners is in contrast to [Backbone's
+declarative way of registering events](http://backbonejs.org/#View-events),
+which is more the "Backbone way".
+
+Backbone.VDOMView will make sure that these declaratively registered event
+listeners will remain active whenever the View's DOM representation changes.
+
+You are therefore expected to use Backbone's declarative events instead of the
+`eventlisteners` module.
 
 ### The beforeRender and afterRender lifecycle methods
 
