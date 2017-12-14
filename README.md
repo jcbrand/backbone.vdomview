@@ -9,14 +9,13 @@ virtual-DOM implementation.
 ## How to use
 
 To use it, extend `Backbone.VDOMView`. Then, instead of implementing a `render`
-method in your view, add either a `toVNode` or `toHTML` method.
+method in your view, add a `toHTML` method which returns the View's HTML as a
+string.
 
-* `toVNode` must return a virtual node as returned by snabbdom's `h` function.
-* `toHTML` must return a string of HTML representing the view.
-
-The HTML of the `toHTML` must be structured that there's a root element
+The HTML of the `toHTML` must be structured so that there's a root element
 containing everything else. This root element is the view's top-level element,
-in other words, it's the `this.el` or `this.$el` attribute of the View.
+in other words, it's the DOM node represented by the `this.el` or `this.$el`
+attribute of the View.
 
 React has a similar requirement that JSX returned by a component's `render` method
 should have a root node which contains everything else.
@@ -37,31 +36,12 @@ For example:
         }
     });
 
-Or alternatively:
-
-    const MyView = Backbone.VDOMView.extend({
-
-        tagName: 'span',
-        className: 'vdom-span',
-
-        toVNode() {
-            return h(
-                'span#container.two.classes',
-                 {on: {click: anotherEventHandler}},
-                [ h('span', {style: {fontWeight: 'normal', fontStyle: 'italic'}},
-                    'This is now italic type'),
-                    ' and this is still just normal text',
-                  h('a', {props: {href: '/bar'}}, 'I\'ll take you places!')
-                ]
-            );
-        }
-    });
-
 ### The toHTML method
 
-One important difference between `Backbone.VDOMView` and Backbone.View that
-should be noted is that `toHTML` should include the root element of the
-view.
+One important difference between `Backbone.VDOMView` and `Backbone.View`
+that should be noted is that the HTML being rendered (in the case of
+`Backbone.VDOMView` this is done in the `toHTML` method) should include
+the root element of the view.
 
 So in the example above `toHTML` should return `<span class="vdom-span"> ... </span>`
 as the outer part of the HTML string.
@@ -78,18 +58,21 @@ Backbone.VDOMView makes use of all Snabbdom's modules except for the
 `eventlisteners` module.
 
 The `eventlisteners` module allows you to add event listeners
-when creating a virtual node via the `h` method. You could for
-example do this in the `toVNode` method, but not in the `toHTML` method.
+when creating a virtual node via the `h` method.
 
-This way of registering event listeners is in contrast to [Backbone's
+However Backbone.VDOMView doesn't use the `h` method of Snabbdom at all (it
+doesn't even include the code for it). Instead, it expects you to render the
+HTML for the view in the `toHTML` method, for example by using an underscore or
+lodash template.
+
+There's therefore no way to attach these event listeners.
+
+This way of registering event listeners is also in contrast to [Backbone's
 declarative way of registering events](http://backbonejs.org/#View-events),
 which is more the "Backbone way".
 
 Backbone.VDOMView will make sure that these declaratively registered event
 listeners will remain active whenever the View's DOM representation changes.
-
-You are therefore expected to use Backbone's declarative events instead of the
-`eventlisteners` module.
 
 ### The beforeRender and afterRender lifecycle methods
 

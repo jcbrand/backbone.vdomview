@@ -91,21 +91,23 @@
 
     Backbone.VDOMView = Backbone.View.extend({
 
+        updateEventListeners (old_vnode, new_vnode) {
+            this.setElement(new_vnode.elm);
+        },
+
         render () {
             if (_.isFunction(this.beforeRender)) {
                 this.beforeRender();
             }
-            
-            let new_vnode;
-            if (!_.isNil(this.renderVNode)) {
-                new_vnode = this.renderVNode();
-            } else if (!_.isNil(this.toHTML)) {
-                new_vnode = tovnode.toVNode(parseHTMLToDOM(this.toHTML()));
+            const new_vnode = tovnode.toVNode(parseHTMLToDOM(this.toHTML()));
+            new_vnode.data.hook = _.extend({
+               create: this.updateEventListeners.bind(this),
+               update: this.updateEventListeners.bind(this)
+            });
+            const el = this.vnode ? this.vnode.elm : this.el;
+            if (el.outerHTML !== new_vnode.elm.outerHTML) {
+                this.vnode = patch(this.vnode || this.el, new_vnode);
             }
-            const root = patch(this.vnode || this.el, new_vnode);
-            this.setElement(root.elm);
-            this.vnode = root;
-
             if (_.isFunction(this.afterRender)) {
                 this.afterRender();
             }
