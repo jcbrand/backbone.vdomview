@@ -51,6 +51,8 @@
         snabbdom_style.default
     ]);
 
+    const View = _.isUndefined(Backbone.NativeView) ? Backbone.View : Backbone.NativeView;
+
     function parseHTMLToDOM (html_str) {
         /* Parses a string with HTML and returns a DOM element.
          *
@@ -89,7 +91,7 @@
         }
     }
 
-    Backbone.VDOMView = Backbone.View.extend({
+    Backbone.VDOMView = View.extend({
 
         updateEventListeners (old_vnode, new_vnode) {
             this.setElement(new_vnode.elm);

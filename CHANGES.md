@@ -4,6 +4,7 @@
 
 - Use Snabbdom, instead of virtual-dom and vdom-parser, for the virtual-DOM implementation.
 - Use `toHTML` as convention instead of `renderHTML`.
+- Use Backbone.NativeView instead of Backbone.View, if it's available.
 
 ## 0.0.2 (2017-11-10)
 

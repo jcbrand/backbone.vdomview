@@ -80,6 +80,15 @@ listeners will remain active whenever the View's DOM representation changes.
 These are `beforeRender` and `afterRender` and are respectively called
 before and after `toHTML` is called.
 
+### Using Backbone.VDOMView without jQuery
+
+Backbone can be used without jQuery by using
+[Backbone.NativeView](https://github.com/akre54/Backbone.NativeView) instead of
+Backbone.View.
+
+If Backbone.NativeView is available, then the VDOMView will use that instead of
+Backbone.View.
+
 ---
 
 `Backbone.VDOMView` is used in [converse.js](https://conversejs.org).
