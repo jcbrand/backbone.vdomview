@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0 (Unreleased)
+## 1.0.0 (2018-01-15)
 
 - Use Snabbdom, instead of virtual-dom and vdom-parser, for the virtual-DOM implementation.
 - Use `toHTML` as convention instead of `renderHTML`.

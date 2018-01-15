@@ -1,6 +1,6 @@
 {
   "name": "backbone.vdomview",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "VirtualDOM-aware Backbone View",
   "main": "backbone.vdomview.js",
   "repository": {
