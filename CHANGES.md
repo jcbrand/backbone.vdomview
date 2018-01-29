@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.1 (Unreleased)
+## 1.0.1 (2018-01-29)
 
 - Transpile the `dist` version for older browsers.
 
