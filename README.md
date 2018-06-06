@@ -10,7 +10,7 @@ virtual-DOM implementation.
 
 To use it, extend `Backbone.VDOMView`. Then, instead of implementing a `render`
 method in your view, add a `toHTML` method which returns the View's HTML as a
-string.
+string (or alternatively, add a `toDOM` method which returns a single DOM element).
 
 The HTML of the `toHTML` must be structured so that there's a root element
 containing everything else. This root element is the view's top-level element,
