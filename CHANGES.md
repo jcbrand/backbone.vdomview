@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2 (2018-01-29)
+
+- Now also checks for `toDOM` if `toHTML` is not defined. `toDOM` must return a
+  single DOM element (with potentially many children).
+
 ## 1.0.1 (2018-01-29)
 
 - Transpile the `dist` version for older browsers.

@@ -60,7 +60,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         this.beforeRender();
       }
 
-      var new_vnode = tovnode.toVNode(parseHTMLToDOM(this.toHTML()));
+      var new_vnode;
+
+      if (!_.isNil(this.toHTML)) {
+        new_vnode = tovnode.toVNode(parseHTMLToDOM(this.toHTML()));
+      } else {
+        new_vnode = tovnode.toVNode(this.toDOM());
+      }
+
       new_vnode.data.hook = _.extend({
         create: this.updateEventListeners.bind(this),
         update: this.updateEventListeners.bind(this)
