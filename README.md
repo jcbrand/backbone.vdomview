@@ -89,6 +89,36 @@ Backbone.View.
 If Backbone.NativeView is available, then the VDOMView will use that instead of
 Backbone.View.
 
+## Composing views out of subviews
+
+It's possible to include a subview inside a view, thereby making your views
+more composable.
+
+This is done by rendering a DOM element with a `data-subview` attribute
+containing the name of the subview.
+
+For exaple:
+
+    <div data-subview="my-subview"></div>
+
+
+You then define your subview class, and make sure to register it:
+
+    MyView = new Backbone.VDOMView.exttend({
+        // View contents comes here
+    });
+
+    // The first parameter here is the name, and should be the same as the
+    // value of the `data-subview` attribute above.
+    Backbone.registerSubView('my-subview', MyView);
+
+For now, there's a restriction that subviews and views must share the same
+model. This might change in the future.
+
+Now, when something happens that should re-render your subview, you trigger
+`subview-render` on the model, and the *entire* view (i.e. super-view plus
+subviews) will rerender.
+
 ---
 
 `Backbone.VDOMView` is used in [converse.js](https://conversejs.org).

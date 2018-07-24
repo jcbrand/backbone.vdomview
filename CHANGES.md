@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3 (Unreleased)
+
+- Initial support for rendering subviews, i.e. allowing views to be composed of subviews.
+
 ## 1.0.2 (2018-01-29)
 
 - Now also checks for `toDOM` if `toHTML` is not defined. `toDOM` must return a

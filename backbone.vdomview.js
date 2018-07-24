@@ -42,6 +42,8 @@
         Backbone) {
     "use strict";
 
+    const registry = {};
+
     let domParser = new DOMParser();
     const patch = snabbdom.init([
         snabbdom_attributes.default,
@@ -91,23 +93,47 @@
         }
     }
 
+
+    Backbone.registerSubView = function (name, klass) {
+        registry[name] = klass;
+    }
+
+
     Backbone.VDOMView = View.extend({
+
+        initialize () {
+            this.__subviews__ = {};
+            this.model.on('subview-render', this.render, this);
+        },
 
         updateEventListeners (old_vnode, new_vnode) {
             this.setElement(new_vnode.elm);
+        },
+
+        renderSubViews (dom) {
+            _.forEach(dom.querySelectorAll('*[data-subview]'), (el) => {
+                const name = el.getAttribute('data-subview');
+                let view = this.__subviews__[name];
+                if (!view) {
+                    const klass = registry[name];
+                    if (klass) {
+                        view = this.__subviews__[name] = new klass({'model': this.model});
+                    } else {
+                        return console.error(`Couldn't find Class for el ${name}`);
+                    }
+                }
+                el.innerHTML = view.toHTML();
+            });
         },
 
         render () {
             if (_.isFunction(this.beforeRender)) {
                 this.beforeRender();
             }
-            let new_vnode;
-            if (!_.isNil(this.toHTML)) {
-                new_vnode = tovnode.toVNode(parseHTMLToDOM(this.toHTML()));
-            } else {
-                new_vnode = tovnode.toVNode(this.toDOM());
-            }
+            const dom = !_.isNil(this.toHTML) ? parseHTMLToDOM(this.toHTML()) : this.toDOM();
+            this.renderSubViews(dom);
 
+            const new_vnode = tovnode.toVNode(dom);
             new_vnode.data.hook = _.extend({
                create: this.updateEventListeners.bind(this),
                update: this.updateEventListeners.bind(this)
