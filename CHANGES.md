@@ -4,6 +4,7 @@
 
 - Now also checks for `toDOM` if `toHTML` is not defined. `toDOM` must return a
   single DOM element (with potentially many children).
+- Upgrade Backbone to 1.4.0 and Snabbdom 0.7.3
 
 ## 1.0.1 (2018-01-29)
 
