@@ -1,10 +1,24 @@
 # backbone.vdomview
 
+## Note: Check out Skeletor instead
+
+If you're looking for a way to write declarative views that only update the
+changed parts of the DOM, take a look at [Skeletor](https://github.com/conversejs/skeletor),
+and in particular the `ElementView` class.
+
+It does the same thing as the `VDOMView` in this package, but much better and
+quicker.
+
+Skeletor is a fork of Backbone that adds [various new
+features](https://github.com/conversejs/skeletor#sekeletor-adds-the-following-changes-to-backbone),
+but you can continue using Backbone and just start using the `ElementView`.
+
+---
+
 This library provides a VirtualDOM-aware Backbone View, called
 `Backbone.VDOMView`.
 
-It depends on [snabbdom](https://github.com/snabbdom/snabbdom) for the
-virtual-DOM implementation.
+It depends on [snabbdom](https://github.com/snabbdom/snabbdom) for the virtual-DOM implementation.
 
 ## How to use
 
